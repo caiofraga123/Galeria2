@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbPhoto"
+        android:id="@+id/tbMain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -21,10 +21,11 @@
         android:id="@+id/rvGallery"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/design_default_color_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbPhoto" />
+        app:layout_constraintTop_toBottomOf="@+id/tbMain" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
