@@ -1,10 +1,5 @@
 package cintra.coelho.fraga.caio.galeria2.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,7 +15,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.AlertDialogLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
@@ -34,9 +32,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cintra.coelho.fraga.caio.galeria2.Manifest;
 import cintra.coelho.fraga.caio.galeria2.R;
 import cintra.coelho.fraga.caio.galeria2.adapter.MainAdapter;
+import cintra.coelho.fraga.caio.galeria2.util.Util;
 
 public class MainActivity extends AppCompatActivity {
     List<String> photos = new ArrayList<>();
@@ -54,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         List<String> permissions = new ArrayList<>();
-        permissions.add(Manifest.permission.CAMERA);
+        permissions.add(android.Manifest.permission.CAMERA);
 
         checkForPermissions(permissions);
 
-        File dir = getExternalFilesDir(Enviroment.DIRECTORY_PICTURES);
+        File dir = getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES);
         File [] files = dir.listFiles();
 
         for (int i = 0; i < files.length; i++) {
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         float w = getResources().getDimension(R.dimen.itemWidth);
 
-        int numberOfColumns = Utils.calculateNoOfColumns(MainActivity.this, w);
+        int numberOfColumns = Util.calculateNoOfColumns(MainActivity.this, w);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, numberOfColumns);
         rvGallery.setLayoutManager(gridLayoutManager);
 
@@ -120,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         currentPhotoPath = f.getAbsolutePath();
 
         if (f != null) {
-            Uri fUri = FileProvider.getUriForFile(MainActivity.this, "cintra.coelho.fraga.caio.fileprovoder", f);
+            Uri fUri = FileProvider.getUriForFile(MainActivity.this, "cintra.coelho.fraga.caio.galeria2.fileprovider", f);
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             i.putExtra(MediaStore.EXTRA_OUTPUT, fUri);
             startActivityForResult(i, RESULT_TAKE_PICTURE);
@@ -130,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp;
-        File storeageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File f = File.createTempFile(imageFileName, ".jpg");
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File f = File.createTempFile(imageFileName, ".jpg", storageDir);
         return f;
     }
 
@@ -174,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         final List<String> permissionsRejected = new ArrayList<>();
